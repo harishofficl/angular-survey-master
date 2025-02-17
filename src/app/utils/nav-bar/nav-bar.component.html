@@ -1,0 +1,17 @@
+<div class="nav-bar white-bg">
+  <div class="nav-bar__logo open-sans-semibold">
+    <img src="survey-icon.png" alt="Survey Master Logo" />
+    <h1>Survey Master</h1>
+  </div>
+  <div class="nav-bar__menu open-sans-regular">
+    <p class="nav-bar__menu-item create-survey-button visually-hidden">
+      Create Survey
+    </p>
+  </div>
+  <div class="nav-bar__user open-sans-regular">
+    <p *ngIf="auth.isAuthenticated" class="hello-user-text poppins-normal">Welcome, {{auth.currentUser.name}}</p>
+    <div class="user-icon">
+      <img src="user-icon.png" alt="User Icon" />
+    </div>
+  </div>
+</div>
