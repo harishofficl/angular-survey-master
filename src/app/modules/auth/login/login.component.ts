@@ -12,7 +12,7 @@ export class LoginComponent {
   username: string;
   password: string;
 
-  constructor(private router: Router, private auth: AuthService) {
+  constructor(private auth: AuthService) {
     this.username = '';
     this.password = '';
   }

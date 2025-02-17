@@ -7,7 +7,8 @@ import { CreateSurveyComponent } from './create-survey/create-survey.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListResponsesComponent } from './list-responses/list-responses.component';
 import { ViewResponseComponent } from './view-response/view-response.component';
-import { NavBarComponent } from "../utils/nav-bar/nav-bar.component";
+import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
+
 
 @NgModule({
   declarations: [
