@@ -1,1 +1,44 @@
-<p>create-survey works!</p>
+<app-nav-bar></app-nav-bar>
+
+<div class="survey-container">
+  <div class="create-survey-title-container poppins-normal">
+    <h1 class="create-survey-title">Create Survey</h1>
+  </div>
+  
+  <div class="header-container white-bg border">
+    <div class="title-container poppins-bold">
+      <input
+        class="survey-title text-box"
+        type="text"
+        placeholder="Survey Title*"
+        id="survey-title"
+      />
+    </div>
+    <div class="description-container poppins-normal">
+      <textarea
+        class="survey-description text-box"
+        placeholder="Describe your survey"
+        id="description-input"
+      ></textarea>
+    </div>
+  </div>
+
+
+  <div *ngFor="let question of questions; let i = index">
+    <app-create-question 
+      [index]="i"
+      (add)="addQuestion(i)"
+      (delete)="deleteQuestion(i)">
+    </app-create-question>
+  </div>
+
+
+  <div class="footer-container">
+    <div class="footer-button-container poppins-semibold">
+      <button type="submit" class="publish-btn poppins-semibold" id="publish-survey-btn">
+        Publish
+      </button>
+    </div>
+  </div>
+</div>
+

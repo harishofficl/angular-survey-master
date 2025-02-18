@@ -1,0 +1,228 @@
+<div class="question-main-container white-bg border">
+  <div class="question-container">
+    <div class="question poppins-normal">
+      <textarea
+        class="question-text"
+        placeholder="Enter your question here*"
+      ></textarea>
+    </div>
+    <div class="answer-type-container poppins-normal">
+      <label>
+        <select class="answer-type" [(ngModel)]="selectedAnswerType" (change)="blur($event)">
+          <option value="text" selected>Short Answer</option>
+          <option value="paragraph">Paragraph</option>
+          <option value="number">Number</option>
+          <option value="radio">MCQs</option>
+          <option value="checkbox">Checkbox</option>
+          <option value="file">File upload</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="answer-main-container">
+    <!-- short answer -->
+    <div class="answer-container" *ngIf="selectedAnswerType === 'text'">
+      <div class="short-answer poppins-text">
+        <p>Short-Answer text</p>
+      </div>
+      <div class="short-answer-validation">
+        <div class="min-length-container">
+          <label class="min-length-label poppins-text"> Min:</label>
+          <input
+            class="validation-box"
+            type="number"
+            placeholder="Min Length"
+          />
+        </div>
+        <div class="max-length-container">
+          <label class="max-length-label poppins-text"> Max:</label>
+          <input
+            class="validation-box"
+            type="number"
+            placeholder="Max Length"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- paragraph -->
+    <div class="answer-container" *ngIf="selectedAnswerType === 'paragraph'">
+      <div class="short-answer long-answer poppins-text">
+        <p>Long-Answer text</p>
+      </div>
+      <div class="short-answer-validation long-answer-validation">
+        <div class="min-length-container">
+          <label class="min-length-label poppins-text">Min:</label>
+          <input
+            class="validation-box"
+            type="number"
+            placeholder="Min Length"
+          />
+        </div>
+        <div class="max-length-container">
+          <label class="max-length-label poppins-text">Max:</label>
+          <input
+            class="validation-box"
+            type="number"
+            placeholder="Max Length"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- number -->
+    <div class="answer-container" *ngIf="selectedAnswerType === 'number'">
+      <div class="short-answer number-answer poppins-text">
+        <p>Numerical value</p>
+      </div>
+      <div class="short-answer-validation number-answer-validation">
+        <div class="min-length-container">
+          <label class="min-length-label poppins-text">Min:</label>
+          <input class="validation-box" type="number" placeholder="Min Value" />
+        </div>
+        <div class="max-length-container">
+          <label class="max-length-label poppins-text">Max:</label>
+          <input class="validation-box" type="number" placeholder="Max Value" />
+        </div>
+      </div>
+    </div>
+
+    <!-- radio -->
+    <div class="answer-container" *ngIf="selectedAnswerType === 'radio'">
+      <div class="short-answer mcq-answer poppins-text">
+        <!-- mcq option -->
+        <div class="mcq-option" *ngFor="let option of mcqOptions; let i = index">
+          <div class="option-icon">
+            <img src="option-icon.png" alt="radio" />
+          </div>
+          <input
+            class="mcq-option-text mcq-option-property"
+            type="text"
+            placeholder="Option"
+          />
+          <div class="delete-icon" (click)="deleteMcqOption(i)">
+            <img src="x-mark.png" alt="x-mark.png" />
+          </div>
+        </div>
+
+        <div class="mcq-add-option mcq-option" (click)="addMcqOption()">
+          <div class="option-icon">
+            <img src="option-icon.png" alt="radio" />
+          </div>
+          <div class="add-option-text mcq-add-option-property">Add Option</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- checkbox -->
+    <div class="answer-container" *ngIf="selectedAnswerType === 'checkbox'">
+      <div class="short-answer mcq-answer poppins-text">
+        <!-- mcq option -->
+        <div
+          class="mcq-option"
+          *ngFor="let option of checkboxOptions; let i = index"
+        >
+          <div class="option-icon checkbox-icon">
+            <img src="checkbox-icon.png" alt="radio" />
+          </div>
+          <input
+            class="mcq-option-text mcq-option-property"
+            type="text"
+            placeholder="Option"
+          />
+          <div class="delete-icon" (click)="deleteCheckboxOption(i)">
+            <img src="x-mark.png" alt="x-mark.png" />
+          </div>
+        </div>
+
+        <div class="mcq-add-option mcq-option" (click)="addCheckboxOption()">
+          <div class="option-icon checkbox-icon">
+            <img src="checkbox-icon.png" alt="checkbox" />
+          </div>
+          <!-- click this to add new checkbox option above -->
+          <div class="add-option-text mcq-add-option-property">Add Option</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- file -->
+    <div class="answer-container file-validation-container" *ngIf="selectedAnswerType === 'file'">
+      <div class="file-upload-container">
+        <div class="file-upload-toggle-container">
+          <label class="file-upload-label poppins-text">
+            Allow only specified file types
+            <label class="switch">
+              <input
+                class="file-upload-toggle"
+                type="checkbox"
+                value="file-type"
+              />
+              <span class="slider round"></span>
+            </label>
+          </label>
+        </div>
+        <div class="file-type-container">
+          <div class="file-type-checkboxes poppins-text">
+            <label>
+              <input type="checkbox" value="document" />
+              Document
+            </label>
+            <label>
+              <input type="checkbox" value="spreadsheet" />
+              Spreadsheet
+            </label>
+            <label>
+              <input type="checkbox" value="pdf" />
+              PDF
+            </label>
+            <label>
+              <input type="checkbox" value="video" />
+              Video
+            </label>
+            <label>
+              <input type="checkbox" value="presentation" />
+              Presentation
+            </label>
+            <label>
+              <input type="checkbox" value="image" />
+              Image
+            </label>
+            <label>
+              <input type="checkbox" value="audio" />
+              Audio
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="file-upload-validation">
+        <div class="file-size-container">
+          <label class="file-size-label poppins-text">Max Size:</label>
+          <input
+            class="validation-box file-size-validation-box"
+            type="number"
+            value="5"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-footer">
+    <div class="add-question" (click)="addQuestion()">
+      <img class="add-question-icon" src="add-button.png" alt="add question" />
+    </div>
+    <div class="delete-icon delete-question-icon" (click)="deleteQuestion()">
+      <img class="delete-question-icon" src="delete.png" alt="delete" />
+    </div>
+    <div class="required-container">
+      <label class="required-toggle-label poppins-text"
+        >Required
+        <label class="switch">
+          <input class="required-toggle" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </label>
+    </div>
+  </div>
+</div>

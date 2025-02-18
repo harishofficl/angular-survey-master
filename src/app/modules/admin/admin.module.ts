@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListResponsesComponent } from './list-responses/list-responses.component';
 import { ViewResponseComponent } from './view-response/view-response.component';
 import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
+import { CreateQuestionComponent } from './utils/create-question/create-question.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
     DashboardComponent,
     ListResponsesComponent,
     ViewResponseComponent,
+    CreateQuestionComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, NavBarComponent],
+  imports: [CommonModule, FormsModule, AdminRoutingModule, NavBarComponent, ReactiveFormsModule],
 })
 export class AdminModule {}
