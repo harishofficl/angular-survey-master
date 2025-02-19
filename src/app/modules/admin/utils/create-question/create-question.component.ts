@@ -1,20 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-create-question',
   templateUrl: './create-question.component.html',
-  styleUrl: './create-question.component.css',
+  styleUrls: ['./create-question.component.css'],
 })
-export class CreateQuestionComponent {
-  selectedAnswerType: string = 'text';
-
+export class CreateQuestionComponent implements OnInit {
   @Input() index!: number;
-  @Output() add = new EventEmitter<number>(); 
+  @Input() question!: FormGroup;
+  @Output() add = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
 
-  mcqOptions: any[] = [{}];
-  checkboxOptions: any[] = [{}];
+  onlySpecifiedFileTypes: boolean = false;
+  selectedAnswerType: string = 'text';
 
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {}
+
+  get options(): FormArray {
+    return this.question.get('options') as FormArray;
+  }
+
+  get fileTypes(): FormArray {
+    return this.question.get('fileTypes') as FormArray;
+  }
+
+  addOption() {
+    this.options.push(this.fb.control(''));
+  }
+
+  deleteOption(index: number) {
+    if (this.options.length > 1) {
+      this.options.removeAt(index);
+    }
+  }
 
   addQuestion() {
     this.add.emit(this.index);
@@ -24,28 +45,27 @@ export class CreateQuestionComponent {
     this.delete.emit(this.index);
   }
 
-  addMcqOption() {
-    this.mcqOptions.push({});
-  }
-
-  addCheckboxOption() {
-    this.checkboxOptions.push({});
-  }
-
-  deleteMcqOption(index: number) {
-    if (this.mcqOptions.length > 1) {
-      this.mcqOptions.splice(index, 1);
-    }
-  }
-
-  deleteCheckboxOption(index: number) {
-    if (this.checkboxOptions.length > 1) {
-      this.checkboxOptions.splice(index, 1);
-    }
-  }
-
   blur(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
+    this.selectedAnswerType = this.question.get('type')?.value;
+    console.log(this.selectedAnswerType);
     selectElement.blur();
+  }
+
+  toggleFileTypes() {
+    this.onlySpecifiedFileTypes = !this.onlySpecifiedFileTypes;
+    this.updateFileTypes();
+  }
+
+  updateFileTypes() {
+    this.fileTypes.clear();
+    if (this.onlySpecifiedFileTypes) {
+      const checkboxes = document.querySelectorAll('.file-type-checkboxes input[type="checkbox"]:checked') as NodeListOf<HTMLInputElement>;
+      checkboxes.forEach((checkbox) => {
+        checkbox.value.split(',').forEach(val => {
+          this.fileTypes.push(this.fb.control(val));
+        });
+      });
+    }
   }
 }

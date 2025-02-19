@@ -1,15 +1,16 @@
-<div class="question-main-container white-bg border">
+<div [formGroup]="question" class="question-main-container white-bg border">
   <div class="question-container">
     <div class="question poppins-normal">
       <textarea
+        formControlName="question"
         class="question-text"
         placeholder="Enter your question here*"
       ></textarea>
     </div>
     <div class="answer-type-container poppins-normal">
       <label>
-        <select class="answer-type" [(ngModel)]="selectedAnswerType" (change)="blur($event)">
-          <option value="text" selected>Short Answer</option>
+        <select formControlName="type" class="answer-type" (change)="blur($event)">
+          <option value="text">Short Answer</option>
           <option value="paragraph">Paragraph</option>
           <option value="number">Number</option>
           <option value="radio">MCQs</option>
@@ -33,6 +34,8 @@
             class="validation-box"
             type="number"
             placeholder="Min Length"
+            formControlName="minLength"
+            
           />
         </div>
         <div class="max-length-container">
@@ -41,6 +44,7 @@
             class="validation-box"
             type="number"
             placeholder="Max Length"
+            formControlName="maxLength"
           />
         </div>
       </div>
@@ -58,6 +62,7 @@
             class="validation-box"
             type="number"
             placeholder="Min Length"
+            formControlName="minLength"
           />
         </div>
         <div class="max-length-container">
@@ -66,6 +71,7 @@
             class="validation-box"
             type="number"
             placeholder="Max Length"
+            formControlName="maxLength"
           />
         </div>
       </div>
@@ -79,36 +85,37 @@
       <div class="short-answer-validation number-answer-validation">
         <div class="min-length-container">
           <label class="min-length-label poppins-text">Min:</label>
-          <input class="validation-box" type="number" placeholder="Min Value" />
+          <input class="validation-box" type="number" placeholder="Min Value" formControlName="minValue"/>
         </div>
         <div class="max-length-container">
           <label class="max-length-label poppins-text">Max:</label>
-          <input class="validation-box" type="number" placeholder="Max Value" />
+          <input class="validation-box" type="number" placeholder="Max Value" formControlName="maxValue"/>
         </div>
       </div>
     </div>
 
     <!-- radio -->
     <div class="answer-container" *ngIf="selectedAnswerType === 'radio'">
-      <div class="short-answer mcq-answer poppins-text">
-        <!-- mcq option -->
-        <div class="mcq-option" *ngFor="let option of mcqOptions; let i = index">
+      <div class="short-answer mcq-answer poppins-text" formArrayName="options">
+        <!-- option -->
+        <div class="mcq-option" *ngFor="let option of options.controls; let i = index">
           <div class="option-icon">
-            <img src="option-icon.png" alt="radio" />
+            <img src="option-icon.png" alt="option" />
           </div>
           <input
+            [formControlName]="i"
             class="mcq-option-text mcq-option-property"
             type="text"
             placeholder="Option"
           />
-          <div class="delete-icon" (click)="deleteMcqOption(i)">
+          <div class="delete-icon" (click)="deleteOption(i)">
             <img src="x-mark.png" alt="x-mark.png" />
           </div>
         </div>
 
-        <div class="mcq-add-option mcq-option" (click)="addMcqOption()">
+        <div class="mcq-add-option mcq-option" (click)="addOption()">
           <div class="option-icon">
-            <img src="option-icon.png" alt="radio" />
+            <img src="option-icon.png" alt="option" />
           </div>
           <div class="add-option-text mcq-add-option-property">Add Option</div>
         </div>
@@ -117,30 +124,27 @@
 
     <!-- checkbox -->
     <div class="answer-container" *ngIf="selectedAnswerType === 'checkbox'">
-      <div class="short-answer mcq-answer poppins-text">
-        <!-- mcq option -->
-        <div
-          class="mcq-option"
-          *ngFor="let option of checkboxOptions; let i = index"
-        >
+      <div class="short-answer mcq-answer poppins-text" formArrayName="options">
+        <!-- option -->
+        <div class="mcq-option" *ngFor="let option of options.controls; let i = index">
           <div class="option-icon checkbox-icon">
-            <img src="checkbox-icon.png" alt="radio" />
+            <img src="checkbox-icon.png" alt="option" />
           </div>
           <input
+            [formControlName]="i"
             class="mcq-option-text mcq-option-property"
             type="text"
             placeholder="Option"
           />
-          <div class="delete-icon" (click)="deleteCheckboxOption(i)">
+          <div class="delete-icon" (click)="deleteOption(i)">
             <img src="x-mark.png" alt="x-mark.png" />
           </div>
         </div>
 
-        <div class="mcq-add-option mcq-option" (click)="addCheckboxOption()">
+        <div class="mcq-add-option mcq-option" (click)="addOption()">
           <div class="option-icon checkbox-icon">
-            <img src="checkbox-icon.png" alt="checkbox" />
+            <img src="checkbox-icon.png" alt="option" />
           </div>
-          <!-- click this to add new checkbox option above -->
           <div class="add-option-text mcq-add-option-property">Add Option</div>
         </div>
       </div>
@@ -151,58 +155,61 @@
       <div class="file-upload-container">
         <div class="file-upload-toggle-container">
           <label class="file-upload-label poppins-text">
-            Allow only specified file types
+            Allow only specific file types
             <label class="switch">
               <input
                 class="file-upload-toggle"
                 type="checkbox"
                 value="file-type"
+                (change)="toggleFileTypes()"
+                formControlName="specifiedFileTypes"
               />
               <span class="slider round"></span>
             </label>
           </label>
         </div>
-        <div class="file-type-container">
-          <div class="file-type-checkboxes poppins-text">
-            <label>
-              <input type="checkbox" value="document" />
-              Document
-            </label>
-            <label>
-              <input type="checkbox" value="spreadsheet" />
-              Spreadsheet
-            </label>
-            <label>
-              <input type="checkbox" value="pdf" />
-              PDF
-            </label>
-            <label>
-              <input type="checkbox" value="video" />
-              Video
-            </label>
-            <label>
-              <input type="checkbox" value="presentation" />
-              Presentation
-            </label>
-            <label>
-              <input type="checkbox" value="image" />
-              Image
-            </label>
-            <label>
-              <input type="checkbox" value="audio" />
-              Audio
-            </label>
+        <div class="file-upload-validation">
+          <div class="file-size-container">
+            <label class="file-size-label poppins-text">Max Size:</label>
+            <input
+              class="validation-box file-size-validation-box"
+              type="number"
+              value="5"
+              formControlName="maxFileSize"
+            />
           </div>
         </div>
       </div>
-      <div class="file-upload-validation">
-        <div class="file-size-container">
-          <label class="file-size-label poppins-text">Max Size:</label>
-          <input
-            class="validation-box file-size-validation-box"
-            type="number"
-            value="5"
-          />
+      <div class="file-type-container" *ngIf="onlySpecifiedFileTypes">
+        <div class="file-type-checkboxes poppins-text">
+          <label>
+            <input type="checkbox" value="docx" (change)="updateFileTypes()"/>
+            Document
+          </label>
+          <label>
+            <input type="checkbox" value="xlsx" (change)="updateFileTypes()"/>
+            Spreadsheet
+          </label>
+          <label>
+            <input type="checkbox" value="pdf" (change)="updateFileTypes()"/>
+            PDF
+          </label>
+          <label>
+            <input type="checkbox" value="mp4,mkv,avi" (change)="updateFileTypes()"/>
+            Video
+          </label>
+          <label>
+            <input type="checkbox" value="pptx" (change)="updateFileTypes()"/>
+            Presentation
+          </label>
+          <label>
+            <input type="checkbox" value="jpg,jpeg,png,heic" (change)="updateFileTypes()"/>
+            Image
+          </label>
+          <label>
+            <input type="checkbox" value="mp3,wav" (change)="updateFileTypes()"/>
+            Audio
+          </label>
         </div>
       </div>
     </div>
@@ -219,7 +226,7 @@
       <label class="required-toggle-label poppins-text"
         >Required
         <label class="switch">
-          <input class="required-toggle" type="checkbox" />
+          <input class="required-toggle" type="checkbox" formControlName="required"/>
           <span class="slider round"></span>
         </label>
       </label>

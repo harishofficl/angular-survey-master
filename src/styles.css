@@ -643,17 +643,26 @@ input:checked + .slider:before {
 /* File upload */
 
 .file-upload-container {
-  margin-bottom: 30px;
+  display: flex;
+  margin-bottom: 20px;
   padding: 5px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .file-validation-container {
-  justify-content: unset;
+  display: block;
   gap: 25%;
 }
 
-.file-upload-toggle-container {
+.file-upload-validation {
+  margin-right: 18px;
+}
+
+.file-type-container {
+  display: flex;
   margin-bottom: 20px;
+  padding: 0 5px 5px 5px;
 }
 
 /* Style for the file-type-checkboxes container */
