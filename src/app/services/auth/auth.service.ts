@@ -6,13 +6,13 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class AuthService {
-  admin = { name: 'Admin', username: 'a', password: 'a' };
-  user = { name: 'User', username: 'u', password: 'u' };
+  admin = { id: 'admin-1', name: 'Admin', username: 'a', password: 'a' };
+  user = { id: 'user-1', name: 'User', username: 'u', password: 'u' };
   currentUser;
   isAuthenticated: boolean = false;
 
   constructor(private router: Router) {
-    this.currentUser = { name: '', username: '', password: '' };
+    this.currentUser = { id: '', name: '', username: '', password: '' };
   }
 
   login(username: string, password: string) {
@@ -41,7 +41,7 @@ export class AuthService {
         this.router.navigate(['user']);
       });
     } else {
-      this.currentUser = { name: '', username: '', password: '' };
+      this.currentUser = { id: '', name: '', username: '', password: '' };
       this.isAuthenticated = false;
       Swal.fire({
         icon: 'error',
@@ -52,7 +52,15 @@ export class AuthService {
   }
 
   logout() {
-    this.currentUser = { name: '', username: '', password: '' };
+    this.currentUser = { id: '', name: '', username: '', password: '' };
     this.isAuthenticated = false;
+  }
+
+  get currentUserId() {
+    return this.currentUser.id;
+  }
+
+  get currentUserName() {
+    return this.currentUser.name;
   }
 }

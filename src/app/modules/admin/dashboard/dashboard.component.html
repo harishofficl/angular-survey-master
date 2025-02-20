@@ -5,9 +5,33 @@
     <h1 class="dashboard-header__title">Dashboard</h1>
   </div>
   <div class="dashboard-body poppins-normal">
-    <!-- Survey cards -->
+    <div
+      class="survey-card"
+      [id]="survey.id"
+      *ngFor="let survey of surveys; let i = index"
+    >
+      <h3 class="survey-card-title">{{ survey.title }}</h3>
+      <p class="survey-card-description">{{ survey.description }}</p>
+      <p class="survey-card-responses">
+        Total Responses: {{ survey.responseCount }}
+      </p>
+      <button
+        type="button"
+        class="survey-card-button poppins-normal"
+        [routerLink]="['list-responses']"
+        [queryParams]="{ surveyId: survey.id , responseCount : survey.responseCount }"
+      >
+        View Responses
+      </button>
+    </div>
   </div>
   <div class="create-survey-floating-button-container fixed">
-    <button type="button" class="create-survey-floating-button poppins-normal" [routerLink]="['create-survey']">+</button>
+    <button
+      type="button"
+      class="create-survey-floating-button poppins-normal"
+      [routerLink]="['create-survey']"
+    >
+      +
+    </button>
   </div>
 </div>

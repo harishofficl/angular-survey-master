@@ -4,7 +4,7 @@
   <div class="create-survey-title-container poppins-normal">
     <h1 class="create-survey-title">Create Survey</h1>
   </div>
-  
+
   <div class="header-container white-bg border">
     <div class="title-container poppins-bold">
       <input
@@ -26,19 +26,28 @@
   </div>
 
   <div formArrayName="questions">
-    <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
+    <div
+      *ngFor="let question of questions.controls; let i = index"
+      [formGroupName]="i"
+    >
       <app-create-question
         [question]="getQuestion(i)"
         [index]="i"
         (add)="addQuestion(i)"
-        (delete)="deleteQuestion(i)">
+        (delete)="deleteQuestion(i)"
+      >
       </app-create-question>
     </div>
   </div>
 
   <div class="footer-container">
     <div class="footer-button-container poppins-semibold">
-      <button type="submit" class="publish-btn poppins-semibold" id="publish-survey-btn" (click)="publishSurvey()">
+      <button
+        type="submit"
+        class="publish-btn poppins-semibold"
+        id="publish-survey-btn"
+        (click)="publishSurvey()"
+      >
         Publish
       </button>
     </div>

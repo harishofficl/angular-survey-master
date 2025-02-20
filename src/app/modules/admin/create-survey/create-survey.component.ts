@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-create-survey',
@@ -11,11 +12,11 @@ import Swal from 'sweetalert2';
 export class CreateSurveyComponent {
   surveyForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private apiService: ApiService, private auth: AuthService) {
     this.surveyForm = this.fb.group({
       title: [''],
       description: [''],
-      userId: [''],
+      userId: [auth.currentUserName || ''],
       questions: this.fb.array([this.createQuestion()]),
     });
   }
