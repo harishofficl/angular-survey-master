@@ -1,1 +1,127 @@
-<p>view-response works!</p>
+<app-nav-bar></app-nav-bar>
+
+<div class="survey-container" id="{{ survey.id }}" [formGroup]="surveyForm">
+  <div class="create-survey-title-container poppins-normal">
+    <h1 class="create-survey-title fill-survey-header-title">View Response</h1>
+  </div>
+  <div class="header-container white-bg border">
+    <div class="description-container poppins-normal">
+      <h1 class="create-survey-title fill-survey-title">
+        {{ surveyForm.get("title")?.value }}
+      </h1>
+      <p class="survey-description fill-survey-description">
+        {{ surveyForm.get("description")?.value }}
+      </p>
+    </div>
+  </div>
+  <div class="fill-survey-form-body" formArrayName="questions">
+    <div
+      *ngFor="let question of questions.controls; let i = index"
+      class="question-main-container white-bg border poppins-normal"
+      [attr.id]="i + 1"
+      [formGroup]="getQuestion(i)"
+    >
+      <!-- Question Title -->
+      <div class="user-question-container poppins-semibold">
+        <p class="user-question">{{ question.get("question")?.value }}</p>
+      </div>
+
+      <!-- Text Input -->
+      <div
+        *ngIf="question.get('type')?.value === 'text'"
+        class="user-answer-container poppins-normal"
+      >
+        <input
+          type="text"
+          class="user-question-input user-question-input-text poppins-normal"
+          formControlName="answer"
+        />
+      </div>
+
+      <!-- Textarea -->
+      <div
+        *ngIf="question.get('type')?.value === 'paragraph'"
+        class="user-answer-container poppins-normal"
+      >
+        <textarea
+          class="question-text user-question-input-textarea poppins-normal"
+          formControlName="answer"
+        ></textarea>
+      </div>
+
+      <!-- Number Input -->
+      <div
+        *ngIf="question.get('type')?.value === 'number'"
+        class="user-answer-container poppins-normal"
+      >
+        <input
+          type="number"
+          class="user-question-input user-question-input-number poppins-normal"
+          formControlName="answer"
+        />
+      </div>
+
+      <!-- Radio Buttons -->
+      <div
+        *ngIf="question.get('type')?.value === 'radio'"
+        class="user-answer-container poppins-normal"
+      >
+        <div
+          *ngFor="let option of question.get('options')?.value; let j = index"
+          class="user-answer-option-container"
+        >
+          <input
+            type="radio"
+            class="user-question-radio-input"
+            [attr.id]="'Q' + (i + 1) + '-O' + (j + 1)"
+            [value]="option"
+            formControlName="answer"
+            [attr.name]="'question-' + i"
+          />
+          <label
+            [attr.for]="'Q' + (i + 1) + '-O' + (j + 1)"
+            class="user-question-option-text poppins-normal"
+          >
+            {{ option }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Checkbox Options -->
+      <div
+        *ngIf="question.get('type')?.value === 'checkbox'"
+        class="user-answer-container poppins-normal"
+      >
+        <div
+          *ngFor="let option of question.get('options')?.value; let j = index"
+          class="user-answer-option-container"
+        >
+          <input
+            type="checkbox"
+            class="user-question-checkbox-input"
+            [attr.id]="'q' + i + '-o' + j"
+            [formControl]="getAnswer(i, j)"
+            [value]="option"
+          />
+          <label
+            [attr.for]="'q' + i + '-o' + j"
+            class="user-question-option-text poppins-normal"
+          >
+            {{ option }}
+          </label>
+        </div>
+      </div>
+
+      <div
+        *ngIf="question.get('type')?.value === 'file'"
+        class="user-answer-container poppins-normal"
+      >
+        <input
+          type="text"
+          class="user-question-file-input poppins-normal"
+          formControlName="answer"
+        />
+      </div>
+    </div>
+  </div>
+</div>

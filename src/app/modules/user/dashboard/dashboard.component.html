@@ -1,2 +1,21 @@
 <app-nav-bar></app-nav-bar>
-<p>user dashboard works!</p>
+
+<div class="dashboard-container poppins-normal">
+  <div class="dashboard-header">
+    <h1 class="dashboard-header__title">Dashboard</h1>
+  </div>
+  <div class="dashboard-body poppins-normal">
+    <div class="survey-card" [id]="survey.id" *ngFor="let survey of surveys">
+      <h3 class="survey-card-title">{{ survey.title }}</h3>
+      <p class="survey-card-description">{{ survey.description }}</p>
+      <button
+        type="button"
+        class="survey-card-button poppins-normal"
+        [routerLink]="['fill-survey']"
+        [queryParams]="{ surveyId: survey.id }"
+      >
+        Answer Survey
+      </button>
+    </div>
+  </div>
+</div>

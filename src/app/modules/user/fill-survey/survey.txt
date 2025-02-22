@@ -1,0 +1,86 @@
+{
+    "id": "67b86e006f86b753543df1e9",
+    "userId": "Admin",
+    "title": "Radio Check Survey",
+    "description": "",
+    "questions": [
+        {
+            "id": 1,
+            "question": "Q1",
+            "type": "radio",
+            "answer": "2",
+            "options": [
+                "1",
+                "2",
+                "3"
+            ],
+            "required": true
+        },
+        {
+            "id": 2,
+            "question": "Q2",
+            "type": "radio",
+            "answer": "C",
+            "options": [
+                "A",
+                "B",
+                "C"
+            ],
+            "required": true
+        }
+    ]
+}
+
+{
+    "id": "67b968346f86b753543df1ea",
+    "surveyId": "67ab108d2be25a7b17ec0d60",
+    "responderName": "User",
+    "createdAt": "2025-02-22T11:31:24.557",
+    "responses": [
+        {
+            "id": "1",
+            "question": "What is your name?",
+            "type": "text",
+            "answer": "Harish S",
+            "options": null
+        },
+        {
+            "id": "2",
+            "question": "How satisfied are you with your job?",
+            "type": "radio",
+            "answer": "Satisfied",
+            "options": null
+        },
+        {
+            "id": "3",
+            "question": "What do you like most about your job?",
+            "type": "paragraph",
+            "answer": "Nill",
+            "options": null
+        },
+        {
+            "id": "4",
+            "question": "How many years have you been with the company?",
+            "type": "number",
+            "answer": "4",
+            "options": null
+        },
+        {
+            "id": "5",
+            "question": "Which of the following benefits do you use?",
+            "type": "checkbox",
+            "answer": null,
+            "options": [
+                "Retirement Plan",
+                "Paid Time Off"
+            ]
+        },
+        {
+            "id": "6",
+            "question": "Please upload any relevant documents or images.",
+            "type": "file",
+            "answer": "sample-video.mp4",
+            "options": null
+        }
+    ]
+}

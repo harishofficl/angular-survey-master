@@ -16,41 +16,62 @@
           </tr>
         </thead>
         <tbody>
-            <p
-              class="no-responses-text poppins-normal"
-              *ngIf="responses?.length === 0"
-            >
-              No response have been submitted yet.
-            </p>
-  
-            <tr *ngFor="let response of responses; let i = index">
-              <td>{{ i + 1 + (pageSize * currentPage)}}</td>
-              <td>{{ response.responderName }}</td>
-              <td>
-                {{
-                  response.createdAt.split("T")[0] +
-                    " " +
-                    response.createdAt.split("T")[1].split(".")[0]
-                }}
-              </td>
-              <td>
-                <button type="button" class="view-response-button poppins-normal">
-                  View Response
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          <p
+            class="no-responses-text poppins-normal"
+            *ngIf="responses?.length === 0"
+          >
+            No response have been submitted yet.
+          </p>
+
+          <tr *ngFor="let response of responses; let i = index">
+            <td>{{ i + 1 + pageSize * currentPage }}</td>
+            <td>{{ response.responderName }}</td>
+            <td>
+              {{
+                response.createdAt.split("T")[0] +
+                  " " +
+                  response.createdAt.split("T")[1].split(".")[0]
+              }}
+            </td>
+            <td>
+              <button
+                type="button"
+                class="view-response-button poppins-normal"
+                [routerLink]="['../view-response']"
+                [queryParams]="{ responseId: response.id }"
+              >
+                View Response
+              </button>
+            </td>
+          </tr>
+        </tbody>
         <tfoot *ngIf="responses.length > 0">
-            <tr>
-              <td colspan="4" id="pagination-handle-button-container">
-                <div class="pagination-handle-buttons">
-                  <button type="button" class="prev-page" (click)="goToPreviousPage()" [disabled]="currentPage === 0">Previous</button>
-                  <span class="page-info">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-                  <button type="button" class="next-page" (click)="goToNextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
+          <tr>
+            <td colspan="4" id="pagination-handle-button-container">
+              <div class="pagination-handle-buttons">
+                <button
+                  type="button"
+                  class="prev-page"
+                  (click)="goToPreviousPage()"
+                  [disabled]="currentPage === 0"
+                >
+                  Previous
+                </button>
+                <span class="page-info"
+                  >Page {{ currentPage + 1 }} of {{ totalPages }}</span
+                >
+                <button
+                  type="button"
+                  class="next-page"
+                  (click)="goToNextPage()"
+                  [disabled]="currentPage >= totalPages - 1"
+                >
+                  Next
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
